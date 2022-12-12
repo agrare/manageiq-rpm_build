@@ -1,0 +1,11 @@
+#!/bin/bash
+
+rpm_path=/root/BUILD
+
+wget http://archive.apache.org/dist/kafka/3.2.0/kafka-3.2.0-src.tgz -P $rpm_path
+wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip -P $rpm_path
+
+pushd packages/kafka
+cp kafka.service zookeeper.service $rpm_path
+
+rpmbuild -bb --define "_sourcedir $rpm_path" --define "_rpmdir $rpm_path" kafka.spec
